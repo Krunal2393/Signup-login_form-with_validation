@@ -103,6 +103,7 @@ import { useForm } from "react-hook-form";
 import {useStateContext} from '../Contexts/FormsContext'
 import "./Signup.css";
 import { useNavigate } from "react-router-dom";
+
 //first we install react-hook-form//
 //after we install semantic-ui-react for button tag and all//
 
@@ -118,6 +119,7 @@ export default function FormValidation() {
     // we check the console throgh the all data will be stored//
     const onSubmit = (data) => {
         console.log(data);
+        
        setUsers(prev => [...prev, data])
        // storeUser(data)
         navigate('/Login');
@@ -127,7 +129,8 @@ export default function FormValidation() {
     return (
 
         <div className="container " >
-            <Form onSubmit={handleSubmit(onSubmit)}>
+            <Form onSubmit={handleSubmit(onSubmit )}>
+                <h1 style={{margin:'auto'}}>SIGN UP FORM</h1>
                 <Form.Field>
                     <label>First Name</label>
                     <input className='inputstyle'
@@ -195,7 +198,7 @@ export default function FormValidation() {
                     />
                 </Form.Field>
                 {errors.password && <p className="text-error">Please check the Password</p>}
-                <Form.Field>
+                <Form.Field >
                     <label>phone number</label>
                     <input className='inputstyle'
                         placeholder='Phone number'
@@ -203,6 +206,7 @@ export default function FormValidation() {
                         {...register("Phone number", {
                             required: true,maxLength :10,
                             pattern: /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/
+                            
                            
                         })}
                     />

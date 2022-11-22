@@ -41,10 +41,13 @@ import { Form, Button } from 'semantic-ui-react';
 import { useForm } from "react-hook-form";
 import "./Login.css";
 import {useStateContext} from '../Contexts/FormsContext'
+import { useNavigate } from "react-router-dom";
 //first we install react-hook-form//
 //after we install semantic-ui-react for button tag and all//
 export default function FormValidation() {
     const { users} = useStateContext()
+    let navigate = useNavigate();
+    const {setUsers} = useStateContext()
     //we create formvalidation function//
     //after we created object in that registername arry/function and handlesubmit passed//
     // and in react hook use we pass formstate in that erroe object pass//
@@ -55,7 +58,9 @@ export default function FormValidation() {
     const onSubmit = (data) => {
         console.log(data);
         console.log("all users", users)
-        
+        setUsers(prev => [...prev, data])
+       // storeUser(data)
+        navigate('/Home');
 
     }
     
@@ -63,6 +68,7 @@ export default function FormValidation() {
         <div className="containerlogin " >
             
             <Form onSubmit={handleSubmit(onSubmit)}>
+                <h1 style={{margin:'auto'}}>LOGIN </h1>
                 
                 <Form.Field>
                     <label>User Name</label>
