@@ -100,7 +100,7 @@
 import React from 'react';
 import { Form, Button } from 'semantic-ui-react';
 import { useForm } from "react-hook-form";
-import {useStateContext} from '../Contexts/FormsContext'
+import { useStateContext } from '../Contexts/FormsContext'
 import "./Signup.css";
 import { useNavigate } from "react-router-dom";
 
@@ -108,57 +108,61 @@ import { useNavigate } from "react-router-dom";
 //after we install semantic-ui-react for button tag and all//
 
 export default function FormValidation() {
-  let navigate = useNavigate();
-  const {setUsers} = useStateContext()
-   //we create formvalidation function//
+    let navigate = useNavigate();
+    const { setUsers ,users} = useStateContext()
+    //we create formvalidation function//
     //after we created object in that registername arry/function and handlesubmit passed//
     // and in react hook use we pass formstate in that erroe object pass//
     // all above are is store in use form//
     const { register, handleSubmit, formState: { errors } } = useForm();
-     //another arrow function created for onsubmit and that we store all data//
+    //another arrow function created for onsubmit and that we store all data//
     // we check the console throgh the all data will be stored//
     const onSubmit = (data) => {
         console.log(data);
-        
-       setUsers(prev => [...prev, data])
-       // storeUser(data)
+
+        setUsers(prev => [...prev, data])
+        // storeUser(data)
         navigate('/Login');
-      
+
     }
-    
+    localStorage.setItem("useryputbe",JSON.stringify([...users,register]))
+
     return (
 
         <div className="container " >
-            <Form onSubmit={handleSubmit(onSubmit )}>
-                <h1 style={{margin:'auto'}}>SIGN UP FORM</h1>
+            <Form onSubmit={handleSubmit(onSubmit)}>
+                <h1 style={{ margin: 'auto' }}>SIGN UP FORM</h1>
                 <Form.Field>
                     <label>First Name</label>
                     <input className='inputstyle'
                         placeholder='First Name'
                         type="text"
-                        {...register("firstName", { required: true, minLength:3, maxLength: 10,
-                          pattern :/^[A-Za-z]+$/ })}
+                        {...register("firstName", {
+                            required: true, minLength: 3, maxLength: 10,
+                            pattern: /^[A-Za-z]+$/
+                        })}
                     />
                 </Form.Field>
-                {errors.firstName && <p className="text-error">Please check the First Name</p>}
+                {errors.firstName && <span className="text-error">Please check the First Name</span>}
                 <Form.Field>
                     <label>Last Name</label>
                     <input className='inputstyle'
                         placeholder='Last Name'
                         type="text"
-                        {...register("lastName", { required: true, minLength:3, maxLength: 10 })}
+                        {...register("lastName", { required: true, minLength: 3, maxLength: 10 })}
                     />
                 </Form.Field>
                 {errors.lastName && <p className="text-error">Please check the Last Name</p>}
                 <Form.Field>
-                <label>User Name</label>
+                    <label>User Name</label>
                     <input className='inputstyle'
                         placeholder='User Name'
                         type="text"
-                        {...register("UserName", { required: true, minLength:3,maxLength: 10 })}
+                        {...register("UserName", { required: true, minLength: 3, maxLength: 10 })}
                     />
                 </Form.Field>
                 {errors.UserName && <p className="texterror-">Please check the User Name</p>}
+
                 <Form.Field>
                     <label>Age</label>
                     <input className='inputstyle'
@@ -166,13 +170,13 @@ export default function FormValidation() {
                         type="number"
                         {...register("Age",
                             {
-                                required: true,min:0.5,
-                               minLength:1,maxLength:2
+                                required: true, min: 0.5,
+                                minLength: 1, maxLength: 2
                             })}
                     />
-                    </Form.Field>
-                    {errors.Age && <p className="texterror-">Please check the Age </p>}
-                
+                </Form.Field>
+                {errors.Age && <p className="texterror-">Please check the Age </p>}
+
                 <Form.Field>
                     <label>Email</label>
                     <input className='inputstyle'
@@ -204,15 +208,15 @@ export default function FormValidation() {
                         placeholder='Phone number'
                         type="number"
                         {...register("Phone number", {
-                            required: true,maxLength :10,
+                            required: true, maxLength: 10,
                             pattern: /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/
-                            
-                           
+
+
                         })}
                     />
                 </Form.Field>
                 {errors.Phonenumber && <p className="text-error">Please check the Phone number</p>}
-                
+
                 <Button type='submit' >Submit</Button>
             </Form>
         </div>

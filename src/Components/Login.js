@@ -59,12 +59,36 @@ export default function FormValidation() {
         console.log(data);
         console.log("all users", users)
         setUsers(prev => [...prev, data])
+
+        const krunal = users.filter(
+                  (ele) =>
+                    ele?.UserName === data?.UserName &&
+                    ele?.Password === data?.Password
+                );
+                console.log("matches values", krunal[0].UserName,krunal[0].Password);
+        
        // storeUser(data)
         navigate('/Home');
 
     }
+    // const onSubmit = (Logindata) => {
+    //     console.log("login-data", Logindata);
+    //     console.log("datafromsignup", usersdata);
     
-    return (
+    //     const vidhi = usersdata.filter(
+    //       (ele) =>
+    //         ele?.UserName === Logindata?.UserName &&
+    //         ele?.Passward === Logindata?.Passward
+    //     );
+    //     console.log("matches values", vidhi[0].UserName,vidhi[0].Passward);
+    
+    //     navigate("/Deshboard");
+    //   };
+   
+    localStorage.setItem("hii",JSON.stringify([...users,register]));
+    
+
+     return (
         <div className="containerlogin " >
             
             <Form onSubmit={handleSubmit(onSubmit)}>
