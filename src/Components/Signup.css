@@ -10,6 +10,7 @@ body {
 .container {
   display: flex;
   flex-direction: column;
+ 
 
   width: fit-content;
   align-items: center;
@@ -52,4 +53,12 @@ input {
   margin-left: 50px;
   margin-right: 100px;
   margin-top: 30px;
+}
+
+.inputstyle2::-webkit-outer-spin-button,
+.inputstyle2::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    
+    padding: 10px 50px;
+   
 }

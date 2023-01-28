@@ -1,3 +1,141 @@
+import React from 'react';
+import { Form, Button } from 'semantic-ui-react';
+import { useForm } from "react-hook-form";
+import { useStateContext } from '../Contexts/FormsContext'
+import "./Signup.css";
+import { useNavigate } from "react-router-dom";
+
+//first we install react-hook-form//
+//after we install semantic-ui-react for button tag and all//
+
+export default function FormValidation() {
+    let navigate = useNavigate();
+    const { setUsers ,users} = useStateContext()
+    //we create formvalidation function//
+    //after we created object in that registername arry/function and handlesubmit passed//
+    // and in react hook use we pass formstate in that erroe object pass//
+    // all above are is store in use form//
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    //another arrow function created for onsubmit and that we store all data//
+    // we check the console throgh the all data will be stored//
+    const onSubmit = (data) => {
+        console.log(data);
+        
+        setUsers(prev => [...prev, data])
+        //\\  storeUser(data)
+        navigate('/Login');
+        
+    }
+    localStorage.setItem("useryputbe",JSON.stringify([...users,register]))
+    const exceptThisSymbols = ["e", "E", "+", "-", "."];
+    return (
+
+        <div className="container " >
+
+            <Form onSubmit={handleSubmit(onSubmit)}>
+                <h1 style={{ margin: 'auto' }}>SIGN UP FORM</h1>
+                <Form.Field>
+                    <label>First Name</label>
+                    <input className='inputstyle'
+                        placeholder='First Name'
+                        type="text"
+                        {...register("firstName", {
+                            required: true, minLength: 3, maxLength: 10,
+                            pattern: /^[A-Za-z]+$/
+                        })}
+                        />
+                </Form.Field>
+                {errors.firstName && <span className="text-error">Please check the First Name</span>}
+                <Form.Field>
+                    <label>Last Name</label>
+                    <input className='inputstyle'
+                        placeholder='Last Name'
+                        type="text"
+                        {...register("lastName", { required: true, minLength: 3, maxLength: 10 })}
+                        />
+                </Form.Field>
+                {errors.lastName && <p className="text-error">Please check the Last Name</p>}
+                <Form.Field>
+                    <label>User Name</label>
+                    <input className='inputstyle'
+                        placeholder='User Name'
+                        type="text"
+                        {...register("UserName", { required: true, minLength: 3, maxLength: 10 })}
+                        />
+                </Form.Field>
+                {errors.UserName && <p className="texterror-">Please check the User Name</p>}
+
+                <Form.Field>
+                    <label>Age</label>
+                    <input className='inputstyle'
+                        placeholder='Age'
+                        type="number"
+                        {...register("Age",
+                        {
+                            required: true, min: 0.5,
+                                minLength: 1, maxLength: 2
+                            })}
+                            />
+                </Form.Field>
+                {errors.Age && <p className="texterror-">Please check the Age </p>}
+
+                <Form.Field>
+                    <label>Email</label>
+                    <input className='inputstyle'
+                        placeholder='Email'
+                        type="email"
+                        {...register("email",
+                        {
+                            required: true,
+                                pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                            })}
+                            />
+                </Form.Field>
+                {errors.email && <p className="text-error">Please check the Email</p>}
+                <Form.Field>
+                    <label>Password</label>
+                    <input className='inputstyle'
+                        placeholder='Password'
+                        type="password"
+                        
+                        {...register("password", {
+                            required: true,
+                            pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/
+                        })}
+                        
+                    />
+                </Form.Field>
+                {errors.password && <p className="text-error">Please check the Password</p>}
+                <Form.Field >
+                    <label>Phone number</label>
+                    
+                    <input className='inputstyle2'
+                        placeholder='Phone number'
+
+                        type="number"
+                        onWheel={event => event.currentTarget.blur()}
+                       
+                        onKeyDown={(e) =>
+                            exceptThisSymbols.includes(e.key) && e.preventDefault()
+                          }
+                        {...register("Phone number", {
+                            required: true, maxLength: 10,
+                            pattern: /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/
+                            
+                            
+                        })}
+                        />
+                </Form.Field>
+                {errors.Phonenumber && <p className="text-error">Please check the Phone number</p>}
+
+                <Button type='submit'>Submit</Button>
+            </Form>
+        </div>
+    )
+}
+//this is normal form without using of reaact hook form use //
+
+
 // import React from "react";
 // import { useStateContext } from "../Contexts/FormsContext";
 
@@ -97,128 +235,3 @@
 //     </>
 //   );
 // }
-import React from 'react';
-import { Form, Button } from 'semantic-ui-react';
-import { useForm } from "react-hook-form";
-import { useStateContext } from '../Contexts/FormsContext'
-import "./Signup.css";
-import { useNavigate } from "react-router-dom";
-
-//first we install react-hook-form//
-//after we install semantic-ui-react for button tag and all//
-
-export default function FormValidation() {
-    let navigate = useNavigate();
-    const { setUsers ,users} = useStateContext()
-    //we create formvalidation function//
-    //after we created object in that registername arry/function and handlesubmit passed//
-    // and in react hook use we pass formstate in that erroe object pass//
-    // all above are is store in use form//
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    //another arrow function created for onsubmit and that we store all data//
-    // we check the console throgh the all data will be stored//
-    const onSubmit = (data) => {
-        console.log(data);
-
-        setUsers(prev => [...prev, data])
-        // storeUser(data)
-        navigate('/Login');
-
-    }
-    localStorage.setItem("useryputbe",JSON.stringify([...users,register]))
-
-    return (
-
-        <div className="container " >
-            <Form onSubmit={handleSubmit(onSubmit)}>
-                <h1 style={{ margin: 'auto' }}>SIGN UP FORM</h1>
-                <Form.Field>
-                    <label>First Name</label>
-                    <input className='inputstyle'
-                        placeholder='First Name'
-                        type="text"
-                        {...register("firstName", {
-                            required: true, minLength: 3, maxLength: 10,
-                            pattern: /^[A-Za-z]+$/
-                        })}
-                    />
-                </Form.Field>
-                {errors.firstName && <span className="text-error">Please check the First Name</span>}
-                <Form.Field>
-                    <label>Last Name</label>
-                    <input className='inputstyle'
-                        placeholder='Last Name'
-                        type="text"
-                        {...register("lastName", { required: true, minLength: 3, maxLength: 10 })}
-                    />
-                </Form.Field>
-                {errors.lastName && <p className="text-error">Please check the Last Name</p>}
-                <Form.Field>
-                    <label>User Name</label>
-                    <input className='inputstyle'
-                        placeholder='User Name'
-                        type="text"
-                        {...register("UserName", { required: true, minLength: 3, maxLength: 10 })}
-                    />
-                </Form.Field>
-                {errors.UserName && <p className="texterror-">Please check the User Name</p>}
-
-                <Form.Field>
-                    <label>Age</label>
-                    <input className='inputstyle'
-                        placeholder='Age'
-                        type="number"
-                        {...register("Age",
-                            {
-                                required: true, min: 0.5,
-                                minLength: 1, maxLength: 2
-                            })}
-                    />
-                </Form.Field>
-                {errors.Age && <p className="texterror-">Please check the Age </p>}
-
-                <Form.Field>
-                    <label>Email</label>
-                    <input className='inputstyle'
-                        placeholder='Email'
-                        type="email"
-                        {...register("email",
-                            {
-                                required: true,
-                                pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                            })}
-                    />
-                </Form.Field>
-                {errors.email && <p className="text-error">Please check the Email</p>}
-                <Form.Field>
-                    <label>Password</label>
-                    <input className='inputstyle'
-                        placeholder='Password'
-                        type="password"
-                        {...register("password", {
-                            required: true,
-                            pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/
-                        })}
-                    />
-                </Form.Field>
-                {errors.password && <p className="text-error">Please check the Password</p>}
-                <Form.Field >
-                    <label>phone number</label>
-                    <input className='inputstyle'
-                        placeholder='Phone number'
-                        type="number"
-                        {...register("Phone number", {
-                            required: true, maxLength: 10,
-                            pattern: /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/
-
-
-                        })}
-                    />
-                </Form.Field>
-                {errors.Phonenumber && <p className="text-error">Please check the Phone number</p>}
-
-                <Button type='submit' >Submit</Button>
-            </Form>
-        </div>
-    )
-}
